@@ -1,10 +1,20 @@
 import { NextResponse } from "next/server";
-import {prismaClient} from "../../../../lib/prisma"
+import {prismaClient} from "../../../../db/prisma"
+import { getServerSession } from "next-auth";
 
 export async function GET() {
-    return NextResponse.json({
-        message: "Sign in response API"
-    })
+    const session = await getServerSession();
+    if (session) {
+        return NextResponse.json({
+            message: "Sign in response API",
+            session
+        })
+    }else {
+        return NextResponse.json({
+            message: "Sign in response API"
+        })
+    }
+    
 }
 
 export async function POST(req:Request) {
